@@ -41,6 +41,8 @@ class Indra {
             ]))
             .do(module => logger.info(module.constructor.name + " init"))
             .flatMap(module => module.init())
+            .toArray()
+            .do(Void => logger.info(`Init complete, finding arb opportunities with ${this.config.minimumArbExecutionPercentage.toString()}% threshold`))
     }
 }
 
