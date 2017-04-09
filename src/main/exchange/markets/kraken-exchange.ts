@@ -41,7 +41,11 @@ export class KrakenExchange extends Exchange {
         })
             .flatMap(res => {
                 if(res.statusCode != 200) {
-                    this.logger.error("Kraken fail", res.body)
+                    this.logger.error("Kraken fail:", res.statusCode, res.body)
+                    throw new Error("Kraken fail")
+                }
+                if(res.body.error.length > 0) {
+                    this.logger.error("Kraken fail:", res.body.error[0])
                     throw new Error("Kraken fail")
                 }
                 let body = res.body
@@ -206,8 +210,12 @@ export class KrakenExchange extends Exchange {
             form: body
         })
             .flatMap(res => {
-                if(res.statusCode != 200 || res.body.error.length > 0) {
-                    this.logger.error("Kraken fail:", res.body.error[0])
+                if(res.statusCode != 200) {
+                    this.logger.error("Kraken fail:", res.statusCode, res.body)
+                    throw new Error("Kraken fail")
+                }
+                if(res.body.error.length > 0) {
+                    this.logger.error("Kraken fail:", res.body.error[0], body)
                     throw new Error("Kraken fail")
                 }
                 return Observable.of(res.body.result)
