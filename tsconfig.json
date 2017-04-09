@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["dom", "es2015", "es2016"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "outDir": "target",
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es2016",
+        "typeRoots": [
+            "node_modules/@types/"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "files": [
+        "typings/index.d.ts"
+    ]
+}

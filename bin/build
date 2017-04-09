@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+const fs = require('fs-extra')
+const path = require('path')
+const childProcess = require('child_process')
+const deasync = require('deasync')
+const bunyan = require('bunyan')
+
+const root = path.join(__dirname, "..")
+const logger = bunyan.createLogger({name: "build"})
+
+let compile = () => {
+    let done = false
+    let cmd = path.join(root, "node_modules/.bin/tsc")
+    childProcess.exec(cmd, (err, stdout, stderr) => {
+        done = true
+        if(err || stderr) {
+            logger.error("Compile failed:", stderr || stdout)
+            process.exit(128)
+        }
+    })
+    deasync.loopWhile(() => !done)
+}
+
+// build
+
+fs.removeSync(path.join(root, "target"))
+
+compile()

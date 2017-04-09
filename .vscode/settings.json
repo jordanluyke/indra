@@ -1,0 +1,8 @@
+{
+    "typescript.tsdk": "./client/node_modules/typescript/lib",
+    "search.exclude": {
+        "node_modules/**": true,
+        "target/**": true,
+        "typings/**": true
+    }
+}
