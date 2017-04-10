@@ -42,7 +42,7 @@ class Indra {
             .do(module => logger.info(module.constructor.name + " init"))
             .flatMap(module => module.init())
             .toArray()
-            .do(Void => logger.info(`Init complete, finding arbitrage opportunities >${this.config.minimumArbExecutionPercentage.toString()}%`))
+            .do(Void => logger.info(`Init complete, finding arbitrage opportunities >${this.config.minExecutionPercentage.toString()}%`))
     }
 }
 

@@ -16,7 +16,7 @@ export class Config {
         KrakenExchange
     ]
 
-    public minimumArbExecutionPercentage = new BigNumber(1)
+    public minExecutionPercentage: BigNumber = new BigNumber(process.env.MIN_EXECUTION_PERCENTAGE || 1)
 
     public minimumBalances: Map<Currency, BigNumber> = new Map<Currency, BigNumber>()
         .set(Currency.BTC, new BigNumber(1))
