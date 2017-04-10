@@ -133,11 +133,11 @@ export class GdaxExchange extends Exchange {
                         exchangeOrder.feesCurrency = this.getTradePairFromProduct(body.product_id).to
 
                         if(body.specified_funds != null) {
-                            exchangeOrder.achievedDestAmount = new BigNumber(body.filled_size)
-                            exchangeOrder.achievedSourceAmount = new BigNumber(body.funds)
-                        } else if(body.size != null) {
-                            exchangeOrder.achievedDestAmount = new BigNumber(body.executed_value)
+                            exchangeOrder.achievedDestAmount = new BigNumber(body.funds)
                             exchangeOrder.achievedSourceAmount = new BigNumber(body.filled_size)
+                        } else if(body.size != null) {
+                            exchangeOrder.achievedDestAmount = new BigNumber(body.filled_size)
+                            exchangeOrder.achievedSourceAmount = new BigNumber(body.executed_value)
                         } else
                             throw new Error("Neither specified_funds nor size found")
 
