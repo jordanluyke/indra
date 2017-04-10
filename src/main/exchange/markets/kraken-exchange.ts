@@ -41,12 +41,12 @@ export class KrakenExchange extends Exchange {
         })
             .flatMap(res => {
                 if(res.statusCode != 200) {
-                    this.logger.error("Kraken fail:", res.statusCode, res.body)
-                    throw new Error("Kraken fail")
+                    this.logger.error("Kraken rates fail:", res.statusCode, res.body)
+                    throw new Error("Kraken rates fail")
                 }
                 if(res.body.error.length > 0) {
-                    this.logger.error("Kraken fail:", res.body.error[0])
-                    throw new Error("Kraken fail")
+                    this.logger.error("Kraken rates fail:", res.body.error[0])
+                    throw new Error("Kraken rates fail")
                 }
                 let body = res.body
                 let ticker = body.result[product]

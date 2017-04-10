@@ -34,8 +34,8 @@ export class GdaxExchange extends Exchange {
         })
             .flatMap(res => {
                 if(res.statusCode != 200) {
-                    this.logger.error("GDAX fail", res.body)
-                    throw new Error("GDAX fail")
+                    this.logger.error("GDAX rates fail", res.body)
+                    throw new Error("GDAX rates fail")
                 }
                 let body = res.body
 
