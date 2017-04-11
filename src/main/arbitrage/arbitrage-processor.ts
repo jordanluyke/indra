@@ -124,7 +124,6 @@ export class ArbitrageProcessor {
                                 destRate,
                                 ArbOpportunity.getPercentage(sourceRate, destRate)))
                         })
-                        .filter(arbOpportunity => arbOpportunity.percentage.comparedTo(this.config.minExecutionPercentage) >= 0)
                         .do(arbOpportunity => {
                             this.logger.info("Arbitrage rate:",
                                 `${arbOpportunity.sourceExchange}(${arbOpportunity.fromCurrency}->${arbOpportunity.toCurrency})`,
@@ -133,6 +132,7 @@ export class ArbitrageProcessor {
                                 "|",
                                 arbOpportunity.percentage.toFormat(2), "%")
                         })
+                        .filter(arbOpportunity => arbOpportunity.percentage.comparedTo(this.config.minExecutionPercentage) >= 0)
                         .do(arbOpportunity => this.eventBus.publish(new ArbOpportunityCreatedEvent(arbOpportunity))))
                         .flatMap(arbOpportunity => this.arbitrageManager.saveArbOpportunity(arbOpportunity))
             })
