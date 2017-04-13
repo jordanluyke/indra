@@ -133,6 +133,12 @@ export class ArbitrageProcessor {
                                 arbOpportunity.percentage.toFormat(2), "%")
                         })
                         .filter(arbOpportunity => arbOpportunity.percentage.comparedTo(this.config.minExecutionPercentage) >= 0)
+                        .do(arbOpportunity => {
+                            if(arbOpportunity.percentage.comparedTo(5) > 0) {
+                                this.logger.info("wtf?", arbOpportunity, exchangeRates)
+                            }
+                        })
+                        .filter(arbOpportunity => arbOpportunity.percentage.comparedTo(5) < 0) // filter for dumbass kraken
                         .do(arbOpportunity => this.eventBus.publish(new ArbOpportunityCreatedEvent(arbOpportunity))))
                         .flatMap(arbOpportunity => this.arbitrageManager.saveArbOpportunity(arbOpportunity))
             })
