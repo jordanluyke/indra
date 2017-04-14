@@ -51,7 +51,7 @@ export class ArbitrageProcessor {
                     if(sourceMaxTradeSize == null || destMaxTradeSize == null)
                         throw new Error("Max trade size not found")
                     let sourceExchangeTradeAmount = BigNumber.min(sourceExchangeBalance, sourceMaxTradeSize)
-                    let destExchangeTradeAmount = BigNumber.min(sourceExchangeBalance, destMaxTradeSize)
+                    let destExchangeTradeAmount = BigNumber.min(destExchangeBalance, destMaxTradeSize)
                     return Observable.zip(
                         this.exchangeManager.placeOrder(arbOpportunity.sourceExchange, new TradePair(arbOpportunity.fromCurrency, arbOpportunity.toCurrency), sourceExchangeTradeAmount, arbOpportunity.sourceRate),
                         this.exchangeManager.placeOrder(arbOpportunity.destExchange, new TradePair(arbOpportunity.toCurrency, arbOpportunity.fromCurrency), destExchangeTradeAmount, arbOpportunity.destRate),
