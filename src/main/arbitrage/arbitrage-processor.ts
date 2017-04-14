@@ -35,6 +35,8 @@ export class ArbitrageProcessor {
                 this.exchangeManager.getBalance(arbOpportunity.sourceExchange, arbOpportunity.fromCurrency),
                 this.exchangeManager.getBalance(arbOpportunity.destExchange, arbOpportunity.toCurrency),
                 (sourceExchangeBalance, destExchangeBalance) => {
+                    sourceExchangeBalance = sourceExchangeBalance.round(8, 3)
+                    destExchangeBalance = destExchangeBalance.round(8, 3)
                     this.logger.info("Processing arb opportunity with balances:",
                         arbOpportunity.sourceExchange, sourceExchangeBalance.toString(), arbOpportunity.fromCurrency + ",",
                         arbOpportunity.destExchange, destExchangeBalance.toString(), arbOpportunity.toCurrency)
@@ -165,6 +167,7 @@ export class ArbitrageProcessor {
                             depositAddress = pairedExchangeName + "-" + exchangeOrder.destCurrency
                         // use balance because kraken has hidden fees in orders
                         return this.exchangeManager.getBalance(exchangeOrder.exchange, exchangeOrder.destCurrency)
+                            .map(balance => balance.round(8, 3))
                             .do(balance => this.logger.info("Transferring", balance.toString(), exchangeOrder.destCurrency, "from", exchangeOrder.exchange, "to", pairedExchangeName))
                             .flatMap(balance => this.exchangeManager.transfer(exchangeOrder.exchange, exchangeOrder.destCurrency, balance, depositAddress))
                     })
