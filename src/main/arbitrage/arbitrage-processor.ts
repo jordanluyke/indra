@@ -61,14 +61,13 @@ export class ArbitrageProcessor {
                             sourceExchangeOrder.rate = arbOpportunity.sourceRate
                             sourceExchangeOrder.sourceAmount = sourceExchangeBalance
                             sourceExchangeOrder.destAmount = sourceExchangeBalance.times(arbOpportunity.sourceRate)
+                            sourceExchangeOrder.arbOpportunityId = arbOpportunity.id
                             destExchangeOrder.rate = arbOpportunity.destRate
                             destExchangeOrder.sourceAmount = destExchangeBalance
                             destExchangeOrder.destAmount = destExchangeBalance.times(arbOpportunity.destRate)
+                            destExchangeOrder.arbOpportunityId = arbOpportunity.id
                             return Observable.from([sourceExchangeOrder, destExchangeOrder])
-                                .flatMap(exchangeOrder => {
-                                    exchangeOrder.arbOpportunityId = arbOpportunity.id
-                                    return this.exchangeManager.saveExchangeOrder(exchangeOrder)
-                                })
+                                .flatMap(exchangeOrder => this.exchangeManager.saveExchangeOrder(exchangeOrder))
                                 .do(exchangeOrder => this.logger.info("Exchange order created:", exchangeOrder.exchange, exchangeOrder.id))
                         }).flatMap(m=>m)
                 }).flatMap(m=>m))
