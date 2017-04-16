@@ -38,3 +38,7 @@ let gdax = injector.get(GdaxExchange)
 //     .do(balance => logger.info("balance", balance.toNumber()))
 //     .flatMap(balance => gdax.placeOrder(new TradePair(Currency.BTC, Currency.ETH), balance, new BigNumber(0.03694)))
 //     .subscribe(Void => {}, err => logger.error(err))
+
+// gdax.getBalance(Currency.BTC)
+//     .flatMap(balance => gdax.transfer(Currency.BTC, balance, "3NKBMuvWkpPFr6H7Apq3mnbdd2hsugAbMx"))
+//     .subscribe(Void => {}, err => logger.error(err))

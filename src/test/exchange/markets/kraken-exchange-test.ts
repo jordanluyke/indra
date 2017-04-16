@@ -44,3 +44,7 @@ let kraken = injector.get(KrakenExchange)
 //     .do(balance => logger.info("balance", balance.toNumber()))
 //     .flatMap(balance => kraken.placeOrder(new TradePair(Currency.ETH, Currency.BTC), balance, new BigNumber(0.03694)))
 //     .subscribe(Void => {}, err => logger.error(err))
+
+// kraken.getBalance(Currency.ETH)
+//     .flatMap(balance => kraken.transfer(Currency.ETH, balance, "GdaxExchange-ETH"))
+//     .subscribe(Void => {}, err => logger.error(err))
