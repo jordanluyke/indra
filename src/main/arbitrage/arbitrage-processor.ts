@@ -164,9 +164,15 @@ export class ArbitrageProcessor {
                             throw new Error("No achievedDestAmount on exchange order")
                         if(exchangeOrder.exchange == KrakenExchange.name) // hack for kraken withdrawal fuckery
                             depositAddress = pairedExchangeName + "-" + exchangeOrder.destCurrency
-                        // use balance because kraken has hidden fees in orders
                         return this.exchangeManager.getBalance(exchangeOrder.exchange, exchangeOrder.destCurrency)
                             .do(balance => this.logger.info("Transferring", balance.toString(), exchangeOrder.destCurrency, "from", exchangeOrder.exchange, "to", pairedExchangeName))
+                            .filter(balance => {
+                                if(balance.comparedTo(0) == 0) {
+                                    this.logger.error("Attempted to transfer balance of 0", exchangeOrder.destCurrency)
+                                    return false
+                                }
+                                return true
+                            })
                             .flatMap(balance => this.exchangeManager.transfer(exchangeOrder.exchange, exchangeOrder.destCurrency, balance, depositAddress))
                     })
             })
