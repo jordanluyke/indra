@@ -11,15 +11,15 @@ export class EventBus {
         handler(Observable.create((observer: Observer<T>) => {
             this.subscribers.put(event.name, observer)
         }))
-            .subscribe(Void => {},
-                err => this.logger.error(err))
+            .subscribe(Void => {}, err => this.logger.error(err))
     }
 
     public publish(event: BaseEvent): void {
-        this.logger.info(event.message)
+        this.logger.info(event.constructor.name, event.message)
         Observable.from(this.subscribers.get(event.constructor.name))
-            .subscribe(subscriber => subscriber.next(event),
-                err => this.logger.error(err))
+            .do(subscriber => subscriber.next(event))
+            .toArray()
+            .subscribe(Void => {}, err => this.logger.error(err))
     }
 }
 
