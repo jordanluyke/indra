@@ -165,15 +165,14 @@ export class ArbitrageProcessor {
                         if(exchangeOrder.exchange == KrakenExchange.name) // hack for kraken withdrawal fuckery
                             depositAddress = pairedExchangeName + "-" + exchangeOrder.destCurrency
                         return this.exchangeManager.getBalance(exchangeOrder.exchange, exchangeOrder.destCurrency)
-                            .do(balance => this.logger.info("Transferring", balance.toString(), exchangeOrder.destCurrency, "from", exchangeOrder.exchange, "to", pairedExchangeName))
-                            .filter(balance => {
+                            .flatMap(balance => {
                                 if(balance.comparedTo(0) == 0) {
-                                    this.logger.error("Attempted to transfer balance of 0", exchangeOrder.destCurrency)
-                                    return false
+                                    this.logger.error("Attempted to transfer balance of 0", exchangeOrder.destCurrency, "on", exchangeOrder.exchange, exchangeOrder.id)
+                                    return Observable.empty()
                                 }
-                                return true
+                                this.logger.info("Transferring", balance.toString(), exchangeOrder.destCurrency, "from", exchangeOrder.exchange, "to", pairedExchangeName)
+                                return this.exchangeManager.transfer(exchangeOrder.exchange, exchangeOrder.destCurrency, balance, depositAddress)
                             })
-                            .flatMap(balance => this.exchangeManager.transfer(exchangeOrder.exchange, exchangeOrder.destCurrency, balance, depositAddress))
                     })
             })
     }

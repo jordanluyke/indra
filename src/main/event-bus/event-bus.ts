@@ -16,7 +16,7 @@ export class EventBus {
     }
 
     public publish(event: BaseEvent): void {
-        this.logger.info(event.constructor.name)
+        this.logger.info(event.message)
         Observable.from(this.subscribers.get(event.constructor.name))
             .subscribe(subscriber => subscriber.next(event),
                 err => this.logger.error(err))

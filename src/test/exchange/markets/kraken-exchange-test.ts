@@ -19,7 +19,7 @@ let kraken = injector.get(KrakenExchange)
 //     .do(balance => logger.info("balance", balance.toNumber()))
 //     .subscribe(Void => {}, err => logger.error(err))
 
-// kraken.getRate(new TradePair(Currency.USD, Currency.BTC))
+// kraken.getRate(new TradePair(Currency.BTC, Currency.ETH))
 //     .do(rate => logger.info("rate", rate))
 //     .subscribe(Void => {}, err => logger.error(err))
 
