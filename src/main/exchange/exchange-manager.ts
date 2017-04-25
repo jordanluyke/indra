@@ -78,10 +78,12 @@ export class ExchangeManager implements ExchangeManagerIntf {
 
     public updatePlacedOrders(): Observable<ExchangeOrder> {
         return this.exchangeDao.getExchangeOrdersByStatus(ExchangeOrder.Status.PLACED)
+            .do(exchangeOrder => this.logger.info("updatePlacedOrders", exchangeOrder.id))
             .flatMap(exchangeOrder => this.getExchangeByName(exchangeOrder.exchange)
                 .flatMap(exchange => exchange.updateExchangeOrder(exchangeOrder)))
             .filter(exchangeOrder => exchangeOrder.status == ExchangeOrder.Status.FILLED)
             .flatMap(exchangeOrder => this.exchangeDao.saveExchangeOrder(exchangeOrder))
+            .do(exchangeOrder => this.logger.info("publishing:", exchangeOrder.id))
             .do(exchangeOrder => this.eventBus.publish(new ExchangeOrderFilledEvent(exchangeOrder)))
     }
 

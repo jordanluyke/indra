@@ -41,6 +41,7 @@ export class ExchangeDao {
     private getExchangeOrdersByConditions(conditions: ObjectLiteral): Observable<ExchangeOrder> {
         return this.orm.getManager()
             .flatMap(manager => Observable.fromPromise(manager.find(ExchangeOrderEntity, conditions)))
+            .do(entities => this.logger.info("exchange orders length:", entities.length))
             .flatMap(entities => Observable.from(entities))
             .map(entity => this.entityToExchangeOrder(entity))
     }
