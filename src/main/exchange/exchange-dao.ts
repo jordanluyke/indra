@@ -32,9 +32,8 @@ export class ExchangeDao {
     }
 
     public saveExchangeOrder(exchangeOrder: ExchangeOrder): Observable<ExchangeOrder> {
-        let entity = this.exchangeOrderToEntity(exchangeOrder)
         return this.orm.getManager()
-            .flatMap(manager => Observable.fromPromise(manager.persist(entity)))
+            .flatMap(manager => Observable.fromPromise(manager.persist(this.exchangeOrderToEntity(exchangeOrder))))
             .map(entity => this.entityToExchangeOrder(entity))
     }
 
@@ -42,6 +41,7 @@ export class ExchangeDao {
         return this.orm.getManager()
             .flatMap(manager => Observable.fromPromise(manager.find(ExchangeOrderEntity, conditions)))
             .flatMap(entities => Observable.from(entities))
+            .distinct(entity => entity.id) // seems to return multiple entities with the same id
             .map(entity => this.entityToExchangeOrder(entity))
     }
 
