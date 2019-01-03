@@ -90,21 +90,21 @@ export class ExchangeDao {
         entity.exchangeTxId = exchangeOrder.exchangeTxId
         entity.arbOpportunityId = exchangeOrder.arbOpportunityId
         if(exchangeOrder.sourceAmount != null)
-            entity.sourceAmount = exchangeOrder.sourceAmount.round(8).toNumber()
+            entity.sourceAmount = exchangeOrder.sourceAmount.decimalPlaces(8).toNumber()
         if(exchangeOrder.destAmount != null)
-            entity.destAmount = exchangeOrder.destAmount.round(8).toNumber()
+            entity.destAmount = exchangeOrder.destAmount.decimalPlaces(8).toNumber()
         if(exchangeOrder.rate != null)
-            entity.rate = exchangeOrder.rate.round(8).toNumber()
+            entity.rate = exchangeOrder.rate.decimalPlaces(8).toNumber()
         if(exchangeOrder.fees != null)
-            entity.fees = exchangeOrder.fees.round(8).toNumber()
+            entity.fees = exchangeOrder.fees.decimalPlaces(8).toNumber()
         if(exchangeOrder.feesCurrency != null)
             entity.feesCurrency = exchangeOrder.feesCurrency.toString()
         if(exchangeOrder.achievedSourceAmount != null)
-            entity.achievedSourceAmount = exchangeOrder.achievedSourceAmount.round(8).toNumber()
+            entity.achievedSourceAmount = exchangeOrder.achievedSourceAmount.decimalPlaces(8).toNumber()
         if(exchangeOrder.achievedDestAmount != null)
-            entity.achievedDestAmount = exchangeOrder.achievedDestAmount.round(8).toNumber()
+            entity.achievedDestAmount = exchangeOrder.achievedDestAmount.decimalPlaces(8).toNumber()
         if(exchangeOrder.achievedRate != null)
-            entity.achievedRate = exchangeOrder.achievedRate.round(8).toNumber()
+            entity.achievedRate = exchangeOrder.achievedRate.decimalPlaces(8).toNumber()
         return entity
     }
 }

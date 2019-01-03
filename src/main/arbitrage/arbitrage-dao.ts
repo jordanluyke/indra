@@ -37,9 +37,9 @@ export class ArbitrageDao {
         entity.destExchange = arbOpportunity.destExchange
         entity.fromCurrency = arbOpportunity.fromCurrency.toString()
         entity.toCurrency = arbOpportunity.toCurrency.toString()
-        entity.sourceRate = arbOpportunity.sourceRate.round(8).toNumber()
-        entity.destRate = arbOpportunity.destRate.round(8).toNumber()
-        entity.percentage = arbOpportunity.percentage.round(8).toNumber()
+        entity.sourceRate = arbOpportunity.sourceRate.decimalPlaces(8).toNumber()
+        entity.destRate = arbOpportunity.destRate.decimalPlaces(8).toNumber()
+        entity.percentage = arbOpportunity.percentage.decimalPlaces(8).toNumber()
         return entity
     }
 

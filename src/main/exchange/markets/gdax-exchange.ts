@@ -89,7 +89,7 @@ export class GdaxExchange extends Exchange {
                 let balance = balances.get(currency)
                 if(balance == null)
                     throw new Error("Invalid currency")
-                return Observable.of(balance.round(8, 3))
+                return Observable.of(balance.decimalPlaces(8, 3))
             })
     }
 

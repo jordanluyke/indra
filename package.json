@@ -12,18 +12,17 @@
     "@types/fs-extra": "2.0.0",
     "@types/node": "7.0.12",
     "@types/request": "0.0.42",
-    "bignumber.js": "4.0.1",
+    "bignumber.js": "8.0.1",
     "bunyan": "1.8.10",
     "deasync": "0.1.9",
     "dotenv": "^4.0.0",
     "fs-extra": "2.1.2",
-    "mysql": "2.13.0",
+    "mysql": "2.16.0",
     "reflect-metadata": "0.1.10",
-    "request": "2.81.0",
+    "request": "2.88.0",
     "rxjs": "5.3.0",
     "ts-di": "1.0.15",
     "typeorm": "0.0.11",
-    "typescript": "2.2.2",
-    "typings": "2.1.0"
+    "typescript": "2.2.2"
   }
 }
